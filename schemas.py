@@ -41,8 +41,14 @@ class Product(BaseModel):
 # Add your own schemas here:
 # --------------------------------------------------
 
-# Note: The Flames database viewer will automatically:
-# 1. Read these schemas from GET /schema endpoint
-# 2. Use them for document validation when creating/editing
-# 3. Handle all database operations (CRUD) directly
-# 4. You don't need to create any database endpoints!
+class Order(BaseModel):
+    """
+    Orders collection schema
+    Collection name: "order"
+    Represents a lead/order request from the landing page
+    """
+    customer_name: str = Field(..., min_length=2, description="Customer full name")
+    phone: str = Field(..., min_length=7, max_length=20, description="Phone or messenger number")
+    color: str = Field(..., description="Selected color variant: black or brown")
+    quantity: int = Field(1, ge=1, le=10, description="Quantity requested")
+    note: Optional[str] = Field(None, max_length=500, description="Additional notes or wishes")
